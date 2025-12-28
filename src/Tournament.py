@@ -141,4 +141,10 @@ class SwissTournament():
         print("Here are the standings!")
         for competitor in self.competitors:
             print(competitor.name, "---", competitor.getRating())
+    
+    def getAllMatches(self):
+        '''Retrieves all matches.
 
+        Returns a list of lists, where each sublist represents a single round of play.
+        '''
+        return self.schedule
