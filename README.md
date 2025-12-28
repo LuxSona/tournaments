@@ -23,3 +23,7 @@ git clone https://github.com/LuxSona/tournaments.git
 Run your Tournaments using the constructor. You can then host the matchups using the built in `holdAllRounds` function.
 The following is a code-snippet which demonstrates how to use the `holdAllRounds` function.
 ![alt text](image.png)
+## License
+MIT License. See LICENSE
+## Contributors
+- Luxsona
