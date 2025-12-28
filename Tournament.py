@@ -13,6 +13,8 @@ def userConfirmation(matchup, leftTitle = "l", rightTitle = "r", drawTitle = "d"
 
     This function takes a matchup and title characters. It then prompts the user for the matchup.
     Handles Byes. 
+
+    
     :param matchup: The matchup to adjucate.
     :param leftTitle: The title of the left competitor.
     :param rightTitle: The title of the right competitor.
