@@ -1,9 +1,26 @@
+'''
+This is the module for generating tournament schedules. It contains the following functions:
+    valid - Tests if a pairing is valid given a list of pairings
+    validMatches - Gets all possible valid matches from a competitor, taking into account all previous matches
+    generateRound - Generates a round given all previous matches, uses a greedy algorithm.
+    generateTournamentSchedule - Generates a list of rounds using generateRound
+'''
 import math
-import itertools
-
 
 def valid(newPairing, allPairings):
-    #Assume allPairings is a list of lists.
+    """Tests if a pairing is valid when taking into account all other pairings.
+    
+    If a given tuple is present in a list of all previous pairings (regardless of order), then 
+    this function returns false. In context for our tournament code, this is to ensure that no 
+    repeated matchups occur. The order of the competitors in a matchup does not matter, so neither should
+    our tuple pairing.
+
+    
+    :param newPairing: A potential pairing.
+    :type param1: tuple
+    :param allPairings: All previous pairings
+    :type param2: list[tuple]
+    """
     a,b = newPairing
     if a == b:
         return False
