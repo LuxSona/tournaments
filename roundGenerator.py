@@ -15,11 +15,11 @@ def valid(newPairing, allPairings):
     repeated matchups occur. The order of the competitors in a matchup does not matter, so neither should
     our tuple pairing.
 
-    
+
     :param newPairing: A potential pairing.
-    :type param1: tuple
+    :type newPairing: tuple
     :param allPairings: All previous pairings
-    :type param2: list[tuple]
+    :type allPairings: list[tuple]
     """
     a,b = newPairing
     if a == b:
@@ -31,6 +31,14 @@ def valid(newPairing, allPairings):
     return True
 
 def validMatches(competitor, allCompetitors, allMatches):
+    '''Gets all valid matches for a single competitor.
+    
+    Returns a list of possible matchups which are valid (i.e. the same competitor isn't fighting itself, and is also not present in the round)
+
+    :param competitor: The potential competitor.
+    :param allCompetitors: A list of all the possible competitors.
+    :param allMatches: All previous matches.
+    '''
     validMatches = []
     for cj in allCompetitors:
         possibleMatch = (competitor, cj)
@@ -41,7 +49,16 @@ def validMatches(competitor, allCompetitors, allMatches):
     return validMatches
 
 def generateRound(competitorList,pastPairings,n,partialRound=[],):
-    #Warning: Must add Bye before competitor List
+    '''Recursively generates a single round, given a list of past pairings.
+    
+    This function aims to find, through recursion, a viable and optimal pairing strategy. There should be no repeats
+    (i.e. any potential pairing should not be in our past pairings or our partial round).
+
+    :param competitorList: A list of competitors.
+    :param pastPairings: All previous pairings.
+    :param n: The number of competitors. Should be even (add Byes as necessary).
+    :param partialRound: The partial round with which we add to recursively.
+    '''
     assert len(competitorList) % 2 == 0
     matches = n // 2
     if len(partialRound) == matches:
@@ -81,13 +98,13 @@ def generateRound(competitorList,pastPairings,n,partialRound=[],):
 
 
 def generateTournamentSchedule(competitorList,n, allPairings = [], fullSchedule = [], rounds = 0):
-    '''
-    Docstring for generateTournamentSchedule
-    
-    :param competitorList: List of competitors
-    allMatchups = []
-    For m = ceil(log2(n))
-        
+    '''Generates the schedule for the full tournament.
+
+    :param competitorList: List of competitors. This should be an even number (add Byes if necessary)
+    :param n: Number of competitors. Should include any Byes. 
+    :param allPairings: All previous pairings in tuple form.
+    :param fullSchedule: The full schedule for the tournament, recursively added to.
+    :param rounds: The number of rounds in this current recursion. Used for base case.
     '''
 
     assert n % 2 == 0

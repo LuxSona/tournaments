@@ -1,13 +1,22 @@
+'''Tournament logic, including matchups and the Swiss Tournament system
+
+:function userConfirmation: Prompts the user to adjucate a matchup.
+'''
 from elo import Competitor, Bye, calculateElo
 from random import shuffle
 import math
-from roundGenerator import generateTournamentSchedule
+from RoundGenerator import generateTournamentSchedule
 
 
 def userConfirmation(matchup, leftTitle = "l", rightTitle = "r", drawTitle = "d"):
-    '''
-    Ask the user to adjucate a matchup using CLI    
-    :param matchup: The matchup to adjucate
+    '''Ask the user to adjucate a matchup using CLI.
+
+    This function takes a matchup and title characters. It then prompts the user for the matchup.
+    Handles Byes. 
+    :param matchup: The matchup to adjucate.
+    :param leftTitle: The title of the left competitor.
+    :param rightTitle: The title of the right competitor.
+    :param drawTitle: The title of the drawing option.
     '''
 
     #Get the matchup's competitors
@@ -32,6 +41,16 @@ def userConfirmation(matchup, leftTitle = "l", rightTitle = "r", drawTitle = "d"
         print("It's a draw!")
     
 class Matchup():
+    '''Matchup class which holds logic for a matchup between two Competitors.
+
+    This class holds the logic for two Competitor objects to face off against each other.
+    Will allow for setting the outcome and getting names.
+
+    :param lc: Left competitor
+    :type lc: Competitor
+    :param rc: Right competitor
+    :type rc: Competitor
+    '''
     def __init__(self, lc, rc):
         #left and right competitors
         self.lc = lc
@@ -43,6 +62,13 @@ class Matchup():
             self.ByeMode = True
     
     def outcome(self, lcScore, rcScore):
+        '''Sets the outcome for the matchup
+
+        This function sets the outcome for the matchup. Preferred 0s and 1 for wins and losses.
+
+        :param lcscore: The score for the left competitor. Int
+        :param rcscore: The score for the right competitor. Int
+        '''
         #Set the outcome by calculating elo
         ls, rs = calculateElo(self.lc, self.rc, lcScore, rcScore)
         print(ls,rs)
@@ -53,6 +79,8 @@ class Matchup():
         self.result = (lcScore, rcScore)
     
     def getNames(self):
+        '''Gets the names of the left and right competitors,
+        '''
         #Return names
         return self.lc.name, self.rc.name
 
@@ -61,6 +89,14 @@ class Matchup():
         return str((self.lc.name, self.rc.name, self.result))
 
 class SwissTournament():
+    '''Swiss torunament logic.
+
+    This class holds the logic for a Swiss style tournament.
+    :param competitors: A list of competitors. Either in name form (if string mode is enabled) or in object form.
+    :type competitors: List[Competitor] or List[String]
+    :param stringMode: Whether or not the Swiss tournament should treat the competitor list as a list of strings or list of Competitor objects.
+    :type stringMode: bool
+    '''
     def __init__(self, competitors, stringMode = False):
         if (stringMode):
             competitors = list(map(Competitor, competitors))
@@ -71,11 +107,19 @@ class SwissTournament():
         self.competitors = competitors
     
     def generateSchedule(self):
+        '''Generate schedule
+        
+        This function uses our roundGenerator module to generate a full match schedule.
+        '''
         tempSchedule = generateTournamentSchedule(self.competitors,self.n)
         self.schedule = [[Matchup(lc,rc) for (lc, rc) in inner] for inner in tempSchedule]
         return self.schedule
     
     def holdAllRounds(self):
+        '''Hold all rounds
+        
+        Will generate the schedule, then hold all rounds within the schedule.
+        '''
         self.generateSchedule()
         i = 0
         for round in self.schedule:
@@ -85,6 +129,10 @@ class SwissTournament():
             i+=1
     
     def showAllStandings(self):
+        '''Shows all standings
+
+        This function prints to stdout the standings of all the competitors.
+        '''
         #Sort competitors by elo
         self.competitors.sort(key=lambda comp: comp.getRating(),reverse=True)
         reversed(self.competitors)
