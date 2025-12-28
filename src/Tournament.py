@@ -3,8 +3,6 @@
 :function userConfirmation: Prompts the user to adjucate a matchup.
 '''
 from src.elo import Competitor, Bye, calculateElo
-from random import shuffle
-import math
 from src.RoundGenerator import generateTournamentSchedule
 
 
