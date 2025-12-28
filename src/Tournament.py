@@ -2,10 +2,10 @@
 
 :function userConfirmation: Prompts the user to adjucate a matchup.
 '''
-from elo import Competitor, Bye, calculateElo
+from src.elo import Competitor, Bye, calculateElo
 from random import shuffle
 import math
-from RoundGenerator import generateTournamentSchedule
+from src.RoundGenerator import generateTournamentSchedule
 
 
 def userConfirmation(matchup, leftTitle = "l", rightTitle = "r", drawTitle = "d"):
@@ -107,6 +107,7 @@ class SwissTournament():
             competitors.append(Bye("Bye"))
         self.n = len(competitors)
         self.competitors = competitors
+        self.schedule = None
     
     def generateSchedule(self):
         '''Generate schedule
@@ -122,7 +123,8 @@ class SwissTournament():
         
         Will generate the schedule, then hold all rounds within the schedule.
         '''
-        self.generateSchedule()
+        if self.schedule is None:
+            self.generateSchedule()
         i = 0
         for round in self.schedule:
             print(f"Round {i+1}")
@@ -147,4 +149,6 @@ class SwissTournament():
 
         Returns a list of lists, where each sublist represents a single round of play.
         '''
+        if self.schedule is None:
+            self.generateSchedule()
         return self.schedule
