@@ -2,8 +2,8 @@
 
 :function userConfirmation: Prompts the user to adjucate a matchup.
 '''
-from src.elo import Competitor, Bye, calculateElo
-from src.RoundGenerator import generateTournamentSchedule
+from src.backend.elo import Competitor, Bye, calculateElo
+from src.backend.RoundGenerator import generateTournamentSchedule
 
 
 def userConfirmation(matchup, leftTitle = "l", rightTitle = "r", drawTitle = "d"):
@@ -116,6 +116,38 @@ class SwissTournament():
         self.schedule = [[Matchup(lc,rc) for (lc, rc) in inner] for inner in tempSchedule]
         return self.schedule
     
+
+    def set_winner(self, round: int, matchup_number: int, winner : int):
+        """Winnter is either 1, -1, or 0. 0 Denotes draw. 1 denotes the left competitor wins. -1 is right
+
+        :param round: The round (we will use this to access the schedule)
+        :type round: int
+        :param winner: The code for the winner
+        :type winner: int
+        """
+        
+        #Guard clauses first
+        if winner not in [-1,0,1]:
+            #Check if the winner code is accurate
+            return
+        
+        #Check if the schedules are generated
+        if self.schedule is None:
+            return
+        
+        else:
+            #Grab the matchup in the round
+            current_round = self.schedule[round]
+            current_matchup = current_round[matchup_number]
+            #Mark the winner according to the winner code.
+            if winner == 1:
+                current_matchup.outcome(1,0)
+            if winner == -1:
+                current_matchup.outcome(0,1)
+            if winner == 0:
+                current_matchup.outcome(0.5,0.5)
+        
+        
     def holdAllRounds(self):
         '''Hold all rounds
         
