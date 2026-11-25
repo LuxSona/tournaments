@@ -1,0 +1,30 @@
+{
+    "tournament_name": "default",
+    "image_path": "data//templates//images//template_tournament",
+    "competitors": [
+        {
+            "name": "competitor_1",
+            "elo": 1500
+        },
+        {
+            "name": "competitor_2",
+            "elo": 1500
+        },
+        {
+            "name": "competitor_3",
+            "elo": 1500
+        },
+        {
+            "name": "competitor_4",
+            "elo": 1500
+        },
+        {
+            "name": "competitor_5",
+            "elo": 1500
+        },
+        {
+            "name": "competitor_6",
+            "elo": 1500
+        }
+    ]
+}
