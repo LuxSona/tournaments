@@ -1,0 +1,53 @@
+{
+    "tournament_name": "default",
+    "competitors": [
+        {
+            "name": "competitor_1",
+            "elo": 1500
+        },
+        {
+            "name": "competitor_2",
+            "elo": 1500
+        },
+        {
+            "name": "competitor_3",
+            "elo": 1500
+        },
+        {
+            "name": "competitor_4",
+            "elo": 1500
+        },
+        {
+            "name": "competitor_5",
+            "elo": 1500
+        },
+        {
+            "name": "competitor_6",
+            "elo": 1500
+        },
+        {
+            "name": "competitor_7",
+            "elo": 1500
+        },
+        {
+            "name": "competitor_8",
+            "elo": 1500
+        },
+        {
+            "name": "competitor_9",
+            "elo": 1500
+        },
+        {
+            "name": "competitor_10",
+            "elo": 1500
+        },
+        {
+            "name": "competitor_11",
+            "elo": 1500
+        },
+        {
+            "name": "competitor_12",
+            "elo": 1500
+        }
+    ]
+}
