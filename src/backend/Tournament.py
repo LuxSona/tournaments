@@ -51,7 +51,7 @@ class Matchup():
     :param rc: Right competitor
     :type rc: Competitor
     '''
-    def __init__(self, lc, rc):
+    def __init__(self, lc : Competitor, rc : Competitor):
         #left and right competitors
         self.lc = lc
         self.rc = rc
@@ -70,8 +70,12 @@ class Matchup():
         :param rcscore: The score for the right competitor. Int
         '''
         #Set the outcome by calculating elo
+        #Check if ByeMode is active
+        if self.ByeMode:
+            # Byes shouldn't impact elo at all
+            return 
+                    
         ls, rs = calculateElo(self.lc, self.rc, lcScore, rcScore)
-        print(ls,rs)
         #Set ratings
         self.lc.setRating(ls)
         self.rc.setRating(rs)
@@ -105,7 +109,7 @@ class SwissTournament():
             competitors.append(Bye("Bye"))
         self.n = len(competitors)
         self.competitors = competitors
-        self.schedule = None
+        self.generateSchedule()
     
     def generateSchedule(self):
         '''Generate schedule
@@ -134,6 +138,7 @@ class SwissTournament():
         #Check if the schedules are generated
         if self.schedule is None:
             return
+        
         
         else:
             #Grab the matchup in the round

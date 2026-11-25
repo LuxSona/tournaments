@@ -9,9 +9,9 @@ class Competitor:
 
     :param name: The name of the competitor/
     '''
-    def __init__(self, name):
+    def __init__(self, name: str, elo : float = 1500):
         self.name = name
-        self.rating = 1500
+        self.rating = elo
     
     def getRating(self):
         '''Returns rating
