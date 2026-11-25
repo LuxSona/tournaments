@@ -4,6 +4,7 @@ Competitor class represents an entity with a name and a list of scores.
 '''
 
 import numpy as np
+
 class Competitor:
     '''Competitor logic. Holds an elo rating.
 

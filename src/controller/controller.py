@@ -2,11 +2,15 @@ import src.backend.Tournament as Tournament
 import src.frontend.UI as UI
 import src.controller.loader as loader
 import tkinter as tk 
+from PIL import Image 
 
 class Controller():
     def __init__(self,root : tk.Tk, tournament_name: str):
         #Load tournament
-        self.competitors = loader.load_competitors(tournament_name)
+        self.loader = loader.Loader(tournament_name)
+
+        self.competitors = self.loader.competitors
+        self.image_map = self.loader.images
         #Create the tournament
         self.tournament = Tournament.SwissTournament(self.competitors)
         self.root = root
@@ -15,7 +19,9 @@ class Controller():
         self.current_matchup = 0
         #Get the first matchup
         self.ui = UI.UI(self.root, self._select_win)
-        self.ui.set_matchup(self.get_current_matchup())
+        self.li = self.image_map[self.get_current_matchup().lc]
+        self.ri = self.image_map[self.get_current_matchup().rc]
+        self.ui.set_matchup(self.get_current_matchup(),self.li,self.ri)
     
     def get_current_matchup(self) -> Tournament.Matchup:
         return self.tournament.schedule[self.current_round][self.current_matchup]
@@ -45,11 +51,9 @@ class Controller():
             return 
 
         #Update UI
-        self.ui.set_matchup(self.get_current_matchup())
+        self.li = self.image_map[self.get_current_matchup().lc]
+        self.ri = self.image_map[self.get_current_matchup().rc]
+        self.ui.set_matchup(self.get_current_matchup(),self.li,self.ri)
 
 
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    controller = Controller(root, "tournament_template.json")
-    root.mainloop()

@@ -1,9 +1,10 @@
 import tkinter as tk 
 from collections.abc import Callable
 from src.backend.Tournament import SwissTournament, Matchup
+from PIL import Image, ImageTk
 
 class UI:
-    def __init__(self, root : tk.Tk, select_win : Callable[[int], None]):
+    def __init__(self, root : tk.Tk, select_win : Callable[[int], None], ):
         #Self variables
         self.root = root 
         self.select_win = select_win
@@ -26,13 +27,17 @@ class UI:
         # Pack the labels so they're visible
         self.left_competitor_name.pack(fill=tk.BOTH, expand=True)
         self.right_competitor_name.pack(fill=tk.BOTH, expand=True)
-
+        
         # Competitor frames (for displaying images or other content)
         self.left_competitor = tk.Frame(self.left_competitor_panel)
         self.right_competitor = tk.Frame(self.right_competitor_panel)
+        self.left_competitor_canvas = tk.Canvas(self.left_competitor_panel,width=300,height=300)
+        self.right_competitor_canvas = tk.Canvas(self.right_competitor_panel,width=300,height=300)
         self.left_competitor.config(width=300, height=600, borderwidth=2, relief="solid")
         self.right_competitor.config(width=300, height=600, borderwidth=2, relief="solid")
         # Pack competitor frames (empty initially)
+        self.left_competitor_canvas.pack()
+        self.right_competitor_canvas.pack()
         self.left_competitor.pack(fill=tk.BOTH, expand=True)
         self.right_competitor.pack(fill=tk.BOTH, expand=True)
 
@@ -81,11 +86,21 @@ class UI:
         # Handle draw button
         self.draw.bind("<Button-1>", lambda event: self.select_win(0))
 
-    def set_matchup(self, matchup: Matchup):
+    def set_matchup(self, matchup: Matchup, li : Image.Image, ri: Image.Image):
         self.current_matchup = matchup
         #Set the text of the left and right competitors.
         self.left_competitor_name.config(text=matchup.lc.name)
         self.right_competitor_name.config(text=matchup.rc.name)
+        canvas_w = self.left_competitor_canvas.winfo_width()
+        canvas_h = self.left_competitor_canvas.winfo_height()
+        if canvas_w <= 1:
+            canvas_w = int(self.left_competitor_canvas.cget('width'))
+        if canvas_h <= 1:
+            canvas_h = int(self.left_competitor_canvas.cget('height'))
+        self.li_image = ImageTk.PhotoImage(li.resize((canvas_w, canvas_h), Image.Resampling.LANCZOS))
+        self.ri_image = ImageTk.PhotoImage(ri.resize((canvas_w, canvas_h), Image.Resampling.LANCZOS))
+        self.left_competitor_canvas.create_image(0, 0, anchor=tk.NW, image=self.li_image)
+        self.right_competitor_canvas.create_image(0, 0, anchor=tk.NW, image=self.ri_image)
 
 
 
