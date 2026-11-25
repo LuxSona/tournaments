@@ -29,6 +29,9 @@ The following is a code-snippet which demonstrates how to use the `holdAllRounds
 # License
 ---
 MIT License. See LICENSE
+# Acknowledgements
+Placeholder images  by Greasemann, CC BY-SA 4.0, via Wikimedia Commons
+https://commons.wikimedia.org/wiki/File:Portrait_Placeholder.png
 # Contributors
 ---
 - Luxsona
